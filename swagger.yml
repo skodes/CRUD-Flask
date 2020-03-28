@@ -1,0 +1,153 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /crud:
+    get:
+      operationId: crud.read_all
+      tags:
+        - crud
+      summary: Read the entire list of crud
+      description: Read the list of crud
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of crud to get from crud
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering crud
+          required: false
+      responses:
+        200:
+          description: Successfully read crud list operation
+          schema:
+            type: array
+            items:
+              properties:
+                stid:
+                  type: string
+                firstname:
+                  type: string
+                lastname:
+                  type: string
+                DOB:
+                  type: string
+                amount_due:
+                  type: string
+
+    post:
+      operationId: crud.create
+      tags:
+        - crud
+      summary: Create a person and add it to the crud list
+      description: Create a new person in the crud list
+      parameters:
+        - name: person
+          in: body
+          description: Person to create
+          required: True
+          schema:
+            type: object
+            properties:
+              stid:
+                type: string
+              firstname:
+                type: string
+              lastname:
+                type: string
+              DOB:
+                type: string
+              amount_due:
+                type: string
+      responses:
+        201:
+          description: Successfully created person in list
+
+  /crud/{lastname}:
+    get:
+      operationId: crud.read_one
+      tags:
+        - crud
+      summary: Read one person from the crud list
+      description: Read one person from the crud list
+      parameters:
+        - name: lastname
+          in: path
+          description: Last name of the person to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read person from crud list operation
+          schema:
+            properties:
+              stid:
+                type: string
+              firstname:
+                type: string
+              lastname:
+                type: string
+              DOB:
+                type: string
+              amount_due:
+                type: string
+
+    put:
+      operationId: crud.update
+      tags:
+        - crud
+      summary: Update a person in the crud list
+      description: Update a person in the crud list
+      parameters:
+        - name: lastname
+          in: path
+          description: Last name of the person to update in the list
+          type: string
+          required: True
+        - name: person
+          in: body
+          schema:
+            type: object
+            properties:
+              stid:
+                type: string
+              firstname:
+                type: string
+              lastname:
+                type: string
+              DOB:
+                type: string
+              amount_due:
+                type: string
+
+      responses:
+        200:
+          description: Successfully updated person in crud list
+
+    delete:
+      operationId: crud.delete
+      tags:
+        - crud
+      summary: Delete a person from the crud list
+      description: Delete a person
+      parameters:
+        - name: lastname
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a person from crud list
